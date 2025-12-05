@@ -1,7 +1,9 @@
 package br.com.fuctura.bibliotecaPessoal.models;
 
 import br.com.fuctura.bibliotecaPessoal.enuns.Edicao;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+
 
 @Entity
 public class Livro {
@@ -14,6 +16,7 @@ public class Livro {
     private String Texto;
     private Edicao edicao;
 
+    @JsonIgnore //#########################
     @ManyToOne
     @JoinColumn(name = "categoria_id")
     private Categoria categoria;

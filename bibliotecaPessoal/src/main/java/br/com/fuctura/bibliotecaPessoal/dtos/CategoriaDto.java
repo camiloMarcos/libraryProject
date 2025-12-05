@@ -1,32 +1,26 @@
-package br.com.fuctura.bibliotecaPessoal.models;
+package br.com.fuctura.bibliotecaPessoal.dtos;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
+import br.com.fuctura.bibliotecaPessoal.models.Livro;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-@Entity
-public class Categoria {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class CategoriaDto {
+
     private Integer id;
     private String nome;
     private String descricao;
 
-
-    @OneToMany(mappedBy = "categoria")
     private List<Livro> livros = new ArrayList<>();
 
-    public Categoria() {
-    }
+    public CategoriaDto() { }
 
-    public Categoria(Integer id, String nome, String descricao) {
+    public CategoriaDto(Integer id, String nome, String descricao) {
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;
-        }
+    }
 
     public Integer getId() {
         return id;
@@ -49,10 +43,4 @@ public class Categoria {
         this.descricao = descricao;
     }
 
-    public List<Livro> getLivros() {
-        return livros;
-    }
-    public void setLivros(List<Livro> livros) {
-        this.livros = livros;
-    }
 }

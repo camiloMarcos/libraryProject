@@ -3,7 +3,7 @@ package br.com.fuctura.bibliotecaPessoal.services;
 import br.com.fuctura.bibliotecaPessoal.enuns.Edicao;
 import br.com.fuctura.bibliotecaPessoal.models.Categoria;
 import br.com.fuctura.bibliotecaPessoal.models.Livro;
-import br.com.fuctura.bibliotecaPessoal.repositories.CategoriaReposytory;
+import br.com.fuctura.bibliotecaPessoal.repositories.CategoriaRepository;
 import br.com.fuctura.bibliotecaPessoal.repositories.LivroRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +15,9 @@ import java.util.Arrays;
 public class DBService {
 
     @Autowired
-    //@RequiredArgsConstructor ->1 outras formas de instanciar uma classe, injeção.
-    private CategoriaReposytory categoriaReposytory;
-    //private final CategoriaReposytory categoriaReposytory; ->1
+    // @RequiredArgsConstructor ->1 outras formas de instanciar uma classe, injeção.
+    private CategoriaRepository categoriaReposytory;
+    // private final CategoriaReposytory categoriaReposytory; ->1
 
     @Autowired
     private LivroRepository livroRepository;
