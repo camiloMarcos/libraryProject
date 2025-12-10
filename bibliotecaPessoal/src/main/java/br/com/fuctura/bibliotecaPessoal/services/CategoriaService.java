@@ -1,5 +1,6 @@
 package br.com.fuctura.bibliotecaPessoal.services;
 
+import br.com.fuctura.bibliotecaPessoal.exceptions.ObjectNotFoundException;
 import br.com.fuctura.bibliotecaPessoal.models.Categoria;
 import br.com.fuctura.bibliotecaPessoal.repositories.CategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +20,15 @@ public class CategoriaService {
 
     public Categoria findById(Integer id) {
         Optional<Categoria> categoria = categoriaRepositorytory.findById(id);
-        return categoria.get();
+        return categoria.orElseThrow(() -> new ObjectNotFoundException("Categoria não encontrada com esse ID: " + id));
     }
 
 
     public List<Categoria> findAll() {
         List<Categoria> list = categoriaRepositorytory.findAll();
+        if (list.isEmpty()) {
+            throw new ObjectNotFoundException("Nenhuma categoria encontrada");
+        }
         return list;
     }
 /*   public List<Categoria> findAll(){
@@ -32,11 +36,13 @@ public class CategoriaService {
 
 
     public Categoria save(Categoria categoria) {
+        buscarPorNome(categoria);
         return categoriaRepositorytory.save(categoria);
     }
 
     public Categoria update(Categoria categoria) {
-
+        findById(categoria.getId());
+        buscarPorNome(categoria);
         return categoriaRepositorytory.save(categoria);
     }
 
@@ -44,6 +50,15 @@ public class CategoriaService {
         categoriaRepositorytory.deleteById(id);
     }
 
+    private void buscarPorNome(Categoria categoria) {
+        Optional<Categoria> cat = categoriaRepositorytory.findByNomeIgnoreCaseContaining(categoria.getNome());
+        if (cat.isPresent()) {
+            if (cat.get().getId() != categoria.getId()) {
+                throw new IllegalArgumentException("Já existe uma categoria com esse nome: " + categoria.getNome());
+            }
+        }
 
-   }
 
+    }
+
+}
